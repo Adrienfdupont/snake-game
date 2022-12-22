@@ -1,6 +1,5 @@
 import pygame
 from snake import Snake
-from snake_piece import Snake_piece
 
 class Game:
 
@@ -16,32 +15,27 @@ class Game:
         clock = pygame.time.Clock()
         while True:
             clock.tick(60)
-            self.handle_input()
-            self.render()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                if event.type == pygame.KEYDOWN:
+                    self.handle_input(event.key)
             self.update()
+            self.render()
+
+    def handle_input(self, key):
+        if (key == pygame.K_LEFT or key == pygame.K_UP
+        or key == pygame.K_RIGHT or key == pygame.K_DOWN):
+            self.snake.change_dir(key)
+
+    def update(self):
+        self.snake.update()
+        self.snake.body.update(self.snake.head)
 
     def render(self):
         self.window.fill((0,0,0))
-        self.snake.draw(self.window)
+        self.snake.body.draw(self.window)
         pygame.display.flip()
-
-    def update(self):
-        self.snake.pieces.draw(self.window)
-
-    def handle_input(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.KEYDOWN:
-                match event.key:
-                    case pygame.K_LEFT:
-                        self.snake.move_left()
-                    case pygame.K_RIGHT:
-                        self.snake.move_right()
-                    case pygame.K_UP:
-                        self.snake.move_up()           
-                    case pygame.K_DOWN:
-                        self.snake.move_down()
             
 
             
