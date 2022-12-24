@@ -24,25 +24,8 @@ class Snake:
             )
             self.body.add(piece)
 
-    def change_dir(self, key):
-        if key == pygame.K_LEFT and self.dir != "right":
-            self.dir = "left"
-        elif key == pygame.K_RIGHT and self.dir != "left":
-            self.dir = "right"
-        elif key == pygame.K_UP and self.dir != "down":
-            self.dir = "up"
-        elif key == pygame.K_DOWN and self.dir != "up":
-            self.dir = "down"
-
     def update(self):
         if self.dir == None:
             return
-        match self.dir:
-            case "left":
-                self.head[0] -= 1
-            case "right":
-                self.head[0] += 1
-            case "up":
-                self.head[1] -= 1
-            case "down":
-                self.head[1] += 1
+        self.head[0] += self.dir[0]
+        self.head[1] += self.dir[1]

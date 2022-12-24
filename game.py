@@ -24,9 +24,14 @@ class Game:
             self.render()
 
     def handle_input(self, key):
-        if (key == pygame.K_LEFT or key == pygame.K_UP
-        or key == pygame.K_RIGHT or key == pygame.K_DOWN):
-            self.snake.change_dir(key)
+        if key == pygame.K_LEFT and self.snake.dir != (1, 0):
+            self.snake.dir = (-1, 0)
+        elif key == pygame.K_RIGHT and self.snake.dir != (-1, 0):
+            self.snake.dir = (1, 0)
+        elif key == pygame.K_UP and self.snake.dir != (0, 1):
+            self.snake.dir = (0, -1)
+        elif key == pygame.K_DOWN and self.snake.dir != (0, -1):
+            self.snake.dir = (0, 1)
 
     def update(self):
         self.snake.update()
