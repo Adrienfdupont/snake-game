@@ -14,7 +14,7 @@ class Game:
     def run(self):
         clock = pygame.time.Clock()
         while True:
-            clock.tick(60)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -24,18 +24,17 @@ class Game:
             self.render()
 
     def handle_input(self, key):
-        if key == pygame.K_LEFT and self.snake.dir != (1, 0):
-            self.snake.dir = (-1, 0)
-        elif key == pygame.K_RIGHT and self.snake.dir != (-1, 0):
-            self.snake.dir = (1, 0)
-        elif key == pygame.K_UP and self.snake.dir != (0, 1):
-            self.snake.dir = (0, -1)
-        elif key == pygame.K_DOWN and self.snake.dir != (0, -1):
-            self.snake.dir = (0, 1)
+        if key == pygame.K_LEFT:
+            self.snake.change_dir_left()
+        elif key == pygame.K_RIGHT:
+            self.snake.change_dir_right()
+        elif key == pygame.K_UP:
+            self.snake.change_dir_up()
+        elif key == pygame.K_DOWN:
+            self.snake.change_dir_down()
 
     def update(self):
         self.snake.update()
-        self.snake.body.update(self.snake.head)
 
     def render(self):
         self.window.fill((0,0,0))

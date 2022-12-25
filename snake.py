@@ -3,29 +3,51 @@ from snake_piece import Snake_piece
 
 class Snake:
 
-    def __init__(self, game_width, game_height):
-        piece_width = 20
-        piece_height = 20
-        color = (0, 255, 0)
+    def __init__(self, window_width, window_height):
 
-        x_start = game_width // 2
-        y_start = game_height // 2
-
-        self.head = [x_start, y_start]
-        self.dir = None
         self.body = pygame.sprite.Group()
-        for i in range(3):
-            piece = Snake_piece(
-                x_start - i * piece_width,
-                y_start,
-                piece_width,
-                piece_height,
-                color
+        self.width = 15
+        self.color = (0, 255, 0)
+        self.velocity = 15
+
+        self.head = Snake_piece(
+            window_width // 2, window_height // 2, self.width, self.color, None
+        )
+        self.head_move = None
+        self.last_piece = self.head
+
+        for i in range(1, 5):
+            self.add_piece(
+                self.head.rect.x - i * self.width, self.head.rect.y, self.last_piece
             )
-            self.body.add(piece)
+
+    def add_piece(self, pos_x, pos_y, peer = None):
+        piece = Snake_piece(
+            pos_x, pos_y, self.width, self.color, peer
+        )
+        self.body.add(piece)
+        self.last_piece = piece
+
+    def change_dir_left(self):
+        if self.head_move != (self.velocity, 0):
+            self.head_move = (-self.velocity, 0)
+        
+    def change_dir_right(self):
+        if self.head_move != (-self.velocity, 0):
+            self.head_move = (self.velocity, 0)
+
+    def change_dir_up(self):
+        if self.head_move != (0, self.velocity):
+            self.head_move = (0, -self.velocity)
+    
+    def change_dir_down(self):
+        if self.head_move != (0, -self.velocity):
+            self.head_move = (0, self.velocity)
 
     def update(self):
-        if self.dir == None:
-            return
-        self.head[0] += self.dir[0]
-        self.head[1] += self.dir[1]
+        if self.head_move != None:
+            self.head.previous_x = self.head.rect.x
+            self.head.previous_y = self.head.rect.y
+            self.head.rect.x += self.head_move[0]
+            self.head.rect.y += self.head_move[1]
+            self.body.update()
