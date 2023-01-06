@@ -1,4 +1,3 @@
-import pygame
 from snake_piece import Snake_piece
 
 class Snake:
@@ -36,10 +35,10 @@ class Snake:
         if self.head_move != (0, -self.velocity):
             self.head_move = (0, self.velocity)
 
-    def update(self, fruit):
+    def update(self):
         if self.head_move != None:
             self.head.previous_x = self.head.rect.x
             self.head.previous_y = self.head.rect.y
             self.head.rect.x += self.head_move[0]
             self.head.rect.y += self.head_move[1]
-            Snake_piece.instances.update(fruit)
+            Snake_piece.instances.update(self.head)

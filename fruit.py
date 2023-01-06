@@ -21,6 +21,6 @@ class Fruit(pygame.sprite.Sprite):
         self.rect.x = random.randint(0, window_width - self.width)
         self.rect.y = random.randint(0, window_height - self.width)
 
-    def die(self):
+    def reset(self):
+        Fruit(self.window_width, self.window_height)
         Fruit.instances.remove(self)
-        Fruit.instances.add(Fruit(self.window_width, self.window_height))

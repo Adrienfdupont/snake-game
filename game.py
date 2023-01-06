@@ -12,8 +12,7 @@ class Game:
 
         self.window = pygame.display.set_mode((width, height))
         self.snake = Snake(width, height)
-
-        self.fruit = Fruit(width, height)
+        Fruit(width, height)
 
     def run(self):
         clock = pygame.time.Clock()
@@ -38,7 +37,7 @@ class Game:
             self.snake.change_dir_down()
 
     def update(self):
-        self.snake.update(self.fruit)
+        self.snake.update()
 
     def render(self):
         self.window.fill((0,0,0))
