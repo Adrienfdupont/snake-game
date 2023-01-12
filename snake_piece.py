@@ -2,7 +2,6 @@ import pygame
 from fruit import Fruit
 
 class Snake_piece(pygame.sprite.Sprite):
-
     instances = pygame.sprite.Group()
 
     def __init__(self, pos_x, pos_y, width, color, peer):    
@@ -19,10 +18,7 @@ class Snake_piece(pygame.sprite.Sprite):
         self.peer = peer
         
     def update(self, head):
-        if self == head:
-            if pygame.sprite.groupcollide(Snake_piece.instances, Fruit.instances, False, True):
-                Fruit(500, 500)
-        else:
+        if self != head:
             self.previous_x = self.rect.x
             self.previous_y = self.rect.y
             self.rect.x = self.peer.previous_x

@@ -4,15 +4,17 @@ from fruit import Fruit
 from snake_piece import Snake_piece
 
 class Game:
-
     def __init__(self):
+        # game init
         pygame.init()
         pygame.display.set_caption("Snake Game")
-        width, height = 1280, 720
+        self.width = 1280
+        self.height = 720
+        self.window = pygame.display.set_mode((self.width, self.height))
 
-        self.window = pygame.display.set_mode((width, height))
-        self.snake = Snake(width, height)
-        Fruit(width, height)
+        # entities init
+        self.snake = Snake(self.width, self.height)
+        Fruit(self.width, self.height)
 
     def run(self):
         clock = pygame.time.Clock()
@@ -38,6 +40,7 @@ class Game:
 
     def update(self):
         self.snake.update()
+        Fruit.instances.update(self.width, self.height, self.snake, Snake_piece.instances)
 
     def render(self):
         self.window.fill((0,0,0))

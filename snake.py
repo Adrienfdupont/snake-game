@@ -1,7 +1,6 @@
 from snake_piece import Snake_piece
 
 class Snake:
-
     def __init__(self, window_width, window_height):
 
         self.width = 15
@@ -42,3 +41,8 @@ class Snake:
             self.head.rect.x += self.head_move[0]
             self.head.rect.y += self.head_move[1]
             Snake_piece.instances.update(self.head)
+
+    def eat(self):
+        print(self.last_piece.rect.x, self.last_piece.previous_x)
+        # if snakes goes left
+        self.add_piece(self.last_piece.previous_x, self.last_piece.previous_y, self.last_piece)
