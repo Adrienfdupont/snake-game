@@ -20,11 +20,6 @@ class Fruit(pygame.sprite.Sprite):
         self.rect.x = random.randint(0, window_width - self.width)
         self.rect.y = random.randint(0, window_height - self.width)
 
-    def update(self, window_width, window_height, snake, snake_pieces):
-        if pygame.sprite.groupcollide(snake_pieces, Fruit.instances, False, True):
-            snake.eat()
-            self.reset(window_width, window_height)
-
-    def reset(self, window_width, window_height):
-        Fruit.instances.remove(self)
+    def update(self, window_width, window_height):
         Fruit(window_width, window_height)
+        Fruit.instances.remove(self)

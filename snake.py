@@ -1,3 +1,4 @@
+import pygame
 from snake_piece import Snake_piece
 
 class Snake:
@@ -19,7 +20,7 @@ class Snake:
         self.last_piece = piece
 
     def change_dir_left(self):
-        if self.head_move != (self.velocity, 0):
+        if self.head_move != (self.velocity, 0) and self.head_move != None:
             self.head_move = (-self.velocity, 0)
         
     def change_dir_right(self):
@@ -34,7 +35,8 @@ class Snake:
         if self.head_move != (0, -self.velocity):
             self.head_move = (0, self.velocity)
 
-    def update(self):
+    def update(self, window_width, window_height, fruits):
+        # manage moving
         if self.head_move != None:
             self.head.previous_x = self.head.rect.x
             self.head.previous_y = self.head.rect.y
@@ -42,7 +44,11 @@ class Snake:
             self.head.rect.y += self.head_move[1]
             Snake_piece.instances.update(self.head)
 
-    def eat(self):
-        print(self.last_piece.rect.x, self.last_piece.previous_x)
-        # if snakes goes left
-        self.add_piece(self.last_piece.previous_x, self.last_piece.previous_y, self.last_piece)
+        # manage eating
+        if pygame.sprite.groupcollide(Snake_piece.instances, fruits, False, False):
+            fruits.update(window_width, window_height)
+            self.add_piece(self.last_piece.previous_x, self.last_piece.previous_y, self.last_piece)
+
+        # check overflow
+        if self.head.rect.x < 0 or self.head.rect.x > window_width or self.head.rect.y < 0 or self.head.rect.y > window_height:
+            pygame.quit()

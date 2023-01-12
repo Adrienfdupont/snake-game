@@ -24,3 +24,8 @@ class Snake_piece(pygame.sprite.Sprite):
             self.rect.x = self.peer.previous_x
             self.rect.y = self.peer.previous_y
         
+        # check not eating itself
+        if self.peer != head and self != head:
+            if pygame.sprite.collide_rect(self, head):
+                pygame.quit()
+        
