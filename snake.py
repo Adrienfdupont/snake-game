@@ -1,9 +1,12 @@
 import pygame
+from pygame import mixer
 from snake_piece import Snake_piece
+import os
 
 class Snake:
     def __init__(self, window_width, window_height):
 
+        mixer.init()
         self.width = 15
         self.color = (0, 255, 0)
         self.velocity = 15
@@ -48,6 +51,8 @@ class Snake:
         if pygame.sprite.groupcollide(Snake_piece.instances, fruits, False, False):
             fruits.update(window_width, window_height)
             self.add_piece(self.last_piece.previous_x, self.last_piece.previous_y, self.last_piece)
+            sound = mixer.Sound(os.path.join("assets", "sounds", "eat.wav"))
+            sound.play()
 
         # check overflow
         if self.head.rect.x < 0 or self.head.rect.x > window_width or self.head.rect.y < 0 or self.head.rect.y > window_height:
