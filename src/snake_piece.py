@@ -4,7 +4,7 @@ from fruit import Fruit
 class Snake_piece(pygame.sprite.Sprite):
     instances = pygame.sprite.Group()
 
-    def __init__(self, pos_x, pos_y, width, color, peer):    
+    def __init__(self, pos_x, pos_y, width, color, peer):
         super().__init__()
         Snake_piece.instances.add(self)
 
@@ -16,8 +16,8 @@ class Snake_piece(pygame.sprite.Sprite):
         self.previous_x = None
         self.previous_y = None
         self.peer = peer
-        
-    def update(self, head):
+
+    def update(self, head, game):
         if self != head:
             self.previous_x = self.rect.x
             self.previous_y = self.rect.y
@@ -27,5 +27,4 @@ class Snake_piece(pygame.sprite.Sprite):
         # check not eating itself
         if self.peer != head and self != head:
             if pygame.sprite.collide_rect(self, head):
-                pygame.quit()
-        
+                game.clear()
