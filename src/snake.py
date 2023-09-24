@@ -38,14 +38,14 @@ class Snake:
         if self.head_move != (0, -self.velocity):
             self.head_move = (0, self.velocity)
 
-    def update(self, window_width, window_height, fruits):
+    def update(self, window_width, window_height, fruits, game):
         # manage moving
         if self.head_move != None:
             self.head.previous_x = self.head.rect.x
             self.head.previous_y = self.head.rect.y
             self.head.rect.x += self.head_move[0]
             self.head.rect.y += self.head_move[1]
-            Snake_piece.instances.update(self.head)
+            Snake_piece.instances.update(self.head, game)
 
         # manage eating
         if pygame.sprite.groupcollide(Snake_piece.instances, fruits, False, False):
@@ -56,4 +56,4 @@ class Snake:
 
         # check overflow
         if self.head.rect.x < 0 or self.head.rect.x > window_width or self.head.rect.y < 0 or self.head.rect.y > window_height:
-            pygame.quit()
+            game.clear()
